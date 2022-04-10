@@ -1,12 +1,11 @@
 import psycopg2
-#Connect Database
+
 conn = psycopg2.connect(
          host="localhost",
          database="umc",
          user="iswandi",
          password="123")
 
-#Menyimpan Data Baru
 def insert_data(conn):
    idmhs = int(input("Masukan ID Mahasiswa: "))
    nim = input("Masukan NIM Mahasiswa: ")
@@ -18,10 +17,8 @@ def insert_data(conn):
    cur = conn.cursor()
    cur.execute(sql, val)
    conn.commit()
-   print("==================================")
    print("{} Data Berhasil Disimpan".format(cur.rowcount))
 
-#Menampilkan Data
 def show_data(conn):
    cur = conn.cursor()
    sql = "SELECT * FROM mahasiswa"
@@ -29,15 +26,12 @@ def show_data(conn):
    result = cur.fetchall()
 
    if cur.rowcount < 0:
-      print("==================================")
       print("DATA TIDAK ADA ATAU BELUM TERISI")
    else:
-      print("==================================")
       print("-{} DATA BERHASIL DITEMUKAN".format(cur.rowcount))
       for data in result:
          print(data)
 
-#Update Data
 def update_data(conn):
    cur = conn.cursor()
    show_data(conn)
@@ -50,10 +44,8 @@ def update_data(conn):
    val = (nim, nama, idfakultas, idprodi, idmhs)
    cur.execute(sql, val)
    conn.commit()
-   print("==================================")
    print("{} Data Berhasil Diupdate".format(cur.rowcount))
 
-#Menghapus Data
 def delete_data(conn):
    cur = conn.cursor()
    show_data(conn)
@@ -69,10 +61,9 @@ def delete_data(conn):
          val = (idmhs)
          cur.execute(sql, val)
          conn.commit()
-         print("==================================")
          print("\b{} DATA BERHASIL DIHAPUS".format(cur.rowcount))
       else:
-         print("data batal dihapus")
+         print("Data batal dihapus")
    else:
       print("TIDAK ADA ID YANG DIMAKSUD")
    """sql = "DELETE FROM mahasiswa WHERE idmhs=%s"
@@ -81,7 +72,6 @@ def delete_data(conn):
    conn.commit()
    print("{} Data Berhasil Dihapus".format(cur.rowcount))"""
 
-#Mencari Data
 def search_data(conn):
    cur = conn.cursor()
    keyword = input("MASUKAN NIM ATAU NAMA DATA YANG DICARI: ")
@@ -91,27 +81,24 @@ def search_data(conn):
    result = cur.fetchall()
 
    if cur.rowcount <= 0:
-      print("==================================")
-      print("TIDAK ADA DATA YANG DIMAKSUD")
+      print("NOTHING")
    else:
-      print("==================================")
-      print("{} DATA YANG DIMAKSUD BERHASIL DITEMUKAN".format(cur.rowcount))
+      print("{} DATA BERHASIL DITEMUKAN".format(cur.rowcount))
       for data in result:
          print(data)
 
-#Menampilkan Menu
 def show_menu(conn):
    print("============================================")
-   print("==== TUGAS 1 PEMBUATAN CRUD MELALUI CLI ====")
+   print("============= TUGAS 1 PBO2  =================")
    print("== DIBUAT OLEH ANTON ISWANDI_( 200510005 )==")
-   print("================   PBO2   ==================")
+   print("======== PEMBUATAN CRUD MELALUI CLI =========")
    print("\n1. Insert Data")
    print("2. Show Data")
    print("3. Update Data")  
    print("4. Delete Data")
    print("5. Search Data")
-   print("0. Keluar")
-   print("------------------")
+   print("0. Keluar\n")
+
    menu = input("Pilih Menu: ")
 
    if menu == "1":
